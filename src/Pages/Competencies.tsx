@@ -129,10 +129,6 @@ const Competencies = () => {
   const [slideDirection, setSlideDirection] = React.useState<'left' | 'right'>('right');
   const [imageKey, setImageKey] = React.useState(0);
 
-  // 拖拽狀態
-  const [isDragging, setIsDragging] = React.useState(false);
-  const [dragStart, setDragStart] = React.useState<{ x: number; y: number } | null>(null);
-
   const handleOpen = (cert: any) => {
     const index = certificates.findIndex(c => c.id === cert.id);
     setSelectedCertIndex(index);
@@ -167,76 +163,6 @@ const Competencies = () => {
     }
   };
 
-  // 滑鼠拖拽控制
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setDragStart({ x: e.clientX, y: e.clientY });
-    e.preventDefault();
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !dragStart) return;
-    e.preventDefault();
-  };
-
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (!isDragging || !dragStart) return;
-    
-    const deltaX = e.clientX - dragStart.x;
-    const deltaY = e.clientY - dragStart.y;
-    const isHorizontalDrag = Math.abs(deltaX) > Math.abs(deltaY);
-    
-    if (isHorizontalDrag && Math.abs(deltaX) > 50) {
-      if (deltaX > 0) {
-        handlePrev(); // 向右拖拽 = 上一張
-      } else {
-        handleNext(); // 向左拖拽 = 下一張
-      }
-    }
-    
-    setIsDragging(false);
-    setDragStart(null);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-    setDragStart(null);
-  };
-
-  // 觸控拖拽控制
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true);
-    setDragStart({
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY
-    });
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !dragStart) return;
-    // 可選：阻止預設行為以防止頁面滾動
-    // e.preventDefault();
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!isDragging || !dragStart) return;
-    
-    const deltaX = e.changedTouches[0].clientX - dragStart.x;
-    const deltaY = e.changedTouches[0].clientY - dragStart.y;
-    const isHorizontalDrag = Math.abs(deltaX) > Math.abs(deltaY);
-    
-    if (isHorizontalDrag && Math.abs(deltaX) > 50) {
-      if (deltaX > 0) {
-        handlePrev(); // 向右拖拽 = 上一張
-      } else {
-        handleNext(); // 向左拖拽 = 下一張
-      }
-    }
-    
-    setIsDragging(false);
-    setDragStart(null);
-  };
-
   // 在新分頁開啟圖片
   const handleOpenInNewTab = () => {
     if (selectedCert) {
@@ -262,7 +188,6 @@ const Competencies = () => {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Download failed:', error);
-      // 備用方案：直接開啟圖片讓使用者右鍵儲存
       handleOpenInNewTab();
     }
   };
@@ -404,16 +329,8 @@ const Competencies = () => {
                     justifyContent: 'center',
                     maxwidth: '90%',
                     minHeight: '60vh',
-                    overflow: 'hidden',
-                    cursor: isDragging ? 'grabbing' : 'grab'
+                    overflow: 'hidden'
                   }}
-                  onMouseDown={handleMouseDown}
-                  onMouseMove={handleMouseMove}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseLeave}
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
                 >
                   {/* 左箭頭 */}
                   <IconButton
@@ -432,7 +349,7 @@ const Competencies = () => {
                     <ArrowBackIosIcon />
                   </IconButton>
                   
-                  {/* 證書圖片 - 加入滑動動畫 */}
+                  {/* 證書圖片 - 滑動動畫 */}
                   <Slide 
                     direction={slideDirection === 'right' ? 'left' : 'right'} 
                     in={true} 
@@ -448,8 +365,7 @@ const Competencies = () => {
                         objectFit: 'contain',
                         borderRadius: 8,
                         boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
-                        userSelect: 'none',
-                        pointerEvents: isDragging ? 'none' : 'auto'
+                        userSelect: 'none'
                       }}
                       draggable={false}
                     />
