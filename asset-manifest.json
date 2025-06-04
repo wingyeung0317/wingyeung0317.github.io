@@ -1,0 +1,40 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e6c13ad2.css",
+    "main.js": "/static/js/main.f4dd4a11.js",
+    "static/js/453.5af2c5fc.chunk.js": "/static/js/453.5af2c5fc.chunk.js",
+    "static/media/F3-YeungWing2.jpg": "/static/media/F3-YeungWing2.b613c24f26ca6603be7a.jpg",
+    "static/media/image1.png": "/static/media/image1.b86f2f8244381bd21118.png",
+    "static/media/DataEngineerBootcamp-YeungWing.jpg": "/static/media/DataEngineerBootcamp-YeungWing.7c6bff360e2ea508bd9a.jpg",
+    "static/media/image02.png": "/static/media/image02.5d1facee533a31309123.png",
+    "static/media/VTC_DVE_Cert-YeungWing.jpg": "/static/media/VTC_DVE_Cert-YeungWing.826f8757589c1a77d918.jpg",
+    "static/media/MachineTools.jpg": "/static/media/MachineTools.9912480a638e2f52c595.jpg",
+    "static/media/IVE_Competition-YeungWing.jpg": "/static/media/IVE_Competition-YeungWing.aa7553f448eb01df715d.jpg",
+    "static/media/image01.png": "/static/media/image01.d5ea381719ff491025cb.png",
+    "static/media/BenchFitting.jpg": "/static/media/BenchFitting.97119ac5bbf294f55b77.jpg",
+    "static/media/image0.png": "/static/media/image0.262d3d911cf548dab1b6.png",
+    "static/media/avatar.png": "/static/media/avatar.2684ca2e741696cd6024.png",
+    "static/media/ElectronicsAndInformationTechnology.jpg": "/static/media/ElectronicsAndInformationTechnology.fc167c3d002084466d91.jpg",
+    "static/media/Welding.jpg": "/static/media/Welding.ed02c11792bec8ea3c44.jpg",
+    "static/media/HkieContribution-YeungWing.jpg": "/static/media/HkieContribution-YeungWing.c7e9c132cd3e506c09de.jpg",
+    "static/media/Refrigeration.jpg": "/static/media/Refrigeration.298f4e7539d747c745ea.jpg",
+    "static/media/image2.png": "/static/media/image2.7135e2bc36d25629810b.png",
+    "static/media/ConstructionIndustrySafety.jpg": "/static/media/ConstructionIndustrySafety.6e4a812bf1191bf3bfad.jpg",
+    "static/media/DrivingLicense_block.jpg": "/static/media/DrivingLicense_block.6e4a812bf1191bf3bfad.jpg",
+    "static/media/image03.png": "/static/media/image03.52245287e2ffeb5c163e.png",
+    "static/media/image029.png": "/static/media/image029.2a1c037e5504c1dbf42d.png",
+    "static/media/image016.jpg": "/static/media/image016.fbf561c187bc69b5c1b4.jpg",
+    "static/media/image017.jpg": "/static/media/image017.8ddd5d3ac45d719891a0.jpg",
+    "static/media/image018.jpg": "/static/media/image018.8370d4773636fab8ff77.jpg",
+    "static/media/image019.jpg": "/static/media/image019.be321b9f040dca85f914.jpg",
+    "static/media/image015.jpg": "/static/media/image015.54251e70218394bbe301.jpg",
+    "index.html": "/index.html",
+    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
+    "main.f4dd4a11.js.map": "/static/js/main.f4dd4a11.js.map",
+    "453.5af2c5fc.chunk.js.map": "/static/js/453.5af2c5fc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.f4dd4a11.js"
+  ]
+}
