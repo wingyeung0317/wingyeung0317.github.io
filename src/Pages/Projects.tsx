@@ -16,6 +16,13 @@ import kaptureaio2 from '../assets/projects/KaptureAIO/image2.png';
 import MotorParkMap1 from '../assets/projects/MotorParkMap/image01.png';
 import MotorParkMap2 from '../assets/projects/MotorParkMap/image02.png';
 import MotorParkMap3 from '../assets/projects/MotorParkMap/image03.png';
+import tweetAnalysis1 from '../assets/projects/tweetAnalysis/image1.png';
+import tweetAnalysis2 from '../assets/projects/tweetAnalysis/image2.png';
+import tweetAnalysis3 from '../assets/projects/tweetAnalysis/image3.png';
+import tweetAnalysis4 from '../assets/projects/tweetAnalysis/image4.png';
+import tweetAnalysis5 from '../assets/projects/tweetAnalysis/image5.png';
+import tweetAnalysis6 from '../assets/projects/tweetAnalysis/image6.png';
+import tweetAnalysis7 from '../assets/projects/tweetAnalysis/image7.png';
 
 const Projects = () => (
   <Element name="projects">
@@ -44,7 +51,7 @@ const Projects = () => (
               description="A web app which was hosted on Azure to analyze sentiments of tweets on twitter using React JS, Flask, and SQL."
               link="https://github.com/wingyeung0317/JDE-TweetsAnalysis"
               images={[
-                kaptureaio0, kaptureaio1, kaptureaio2
+                tweetAnalysis1, tweetAnalysis2, tweetAnalysis3, tweetAnalysis4, tweetAnalysis5, tweetAnalysis6, tweetAnalysis7
               ]}
             />
           </Grid>
@@ -52,7 +59,7 @@ const Projects = () => (
             <ProjectCard
               title="KaptureAIO"
               description="This is a project that aim to build an android app that provide different photographic informations for Hong Konger, such as Weather, Place, Forum etc."
-              link="https://github.com/wingyeung0317/JDE-TweetsAnalysis"
+              link="https://github.com/wingyeung0317/KaptureAIO"
               images={[
                 kaptureaio0, kaptureaio1, kaptureaio2
               ]}

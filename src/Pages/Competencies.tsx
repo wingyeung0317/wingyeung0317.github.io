@@ -17,6 +17,7 @@ import Refrigeration from '../assets/competencies/Refrigeration.jpg';
 import VTCCertificate from '../assets/competencies/VTC_DVE_Cert-YeungWing.jpg';
 import Welding from '../assets/competencies/Welding.jpg';
 import ConstructionIndustrySafety from '../assets/competencies/ConstructionIndustrySafety.jpg';
+import GoldenBauhinaAward from '../assets/competencies/GoldenBauhinaAward.jpg';
 
 const Competencies = () => {
   const certificates = [
@@ -116,6 +117,14 @@ const Competencies = () => {
       image: F3Certificate,
       description: "Certificate of Activity Attendance for Form 3 at CCC Chuen Yuen College."
     },
+    {
+      id: 13,
+      title: "Golden Bauhina Award",
+      institution: "Scout Association of Hong Kong",
+      year: "2015",
+      image: GoldenBauhinaAward,
+      description: "The highest award in the Scout Association of Hong Kong, commending the achievements in outdoor activities, adventure challenges, leadership skills, service, and sharing."
+    }
   ];
 
   const [open, setOpen] = React.useState(false);
