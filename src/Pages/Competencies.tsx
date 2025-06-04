@@ -182,7 +182,6 @@ const Competencies = () => {
                     title="🔍 Click to view certificate details" 
                     arrow 
                     placement="top"
-                    enterDelay={500}
                     leaveDelay={200}
                   >
                     <Card 
