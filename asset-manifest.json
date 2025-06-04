@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.e6c13ad2.css",
-    "main.js": "/static/js/main.f4dd4a11.js",
+    "main.css": "/static/css/main.aa276f67.css",
+    "main.js": "/static/js/main.cf82a193.js",
     "static/js/453.5af2c5fc.chunk.js": "/static/js/453.5af2c5fc.chunk.js",
     "static/media/F3-YeungWing2.jpg": "/static/media/F3-YeungWing2.b613c24f26ca6603be7a.jpg",
     "static/media/image1.png": "/static/media/image1.b86f2f8244381bd21118.png",
@@ -13,6 +13,7 @@
     "static/media/image01.png": "/static/media/image01.d5ea381719ff491025cb.png",
     "static/media/BenchFitting.jpg": "/static/media/BenchFitting.97119ac5bbf294f55b77.jpg",
     "static/media/image0.png": "/static/media/image0.262d3d911cf548dab1b6.png",
+    "static/media/404.gif": "/static/media/404.377d6170ee13aa104b5d.gif",
     "static/media/avatar.png": "/static/media/avatar.2684ca2e741696cd6024.png",
     "static/media/ElectronicsAndInformationTechnology.jpg": "/static/media/ElectronicsAndInformationTechnology.fc167c3d002084466d91.jpg",
     "static/media/Welding.jpg": "/static/media/Welding.ed02c11792bec8ea3c44.jpg",
@@ -29,12 +30,12 @@
     "static/media/image019.jpg": "/static/media/image019.be321b9f040dca85f914.jpg",
     "static/media/image015.jpg": "/static/media/image015.54251e70218394bbe301.jpg",
     "index.html": "/index.html",
-    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
-    "main.f4dd4a11.js.map": "/static/js/main.f4dd4a11.js.map",
+    "main.aa276f67.css.map": "/static/css/main.aa276f67.css.map",
+    "main.cf82a193.js.map": "/static/js/main.cf82a193.js.map",
     "453.5af2c5fc.chunk.js.map": "/static/js/453.5af2c5fc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.f4dd4a11.js"
+    "static/css/main.aa276f67.css",
+    "static/js/main.cf82a193.js"
   ]
 }
