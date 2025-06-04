@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Avatar, Grid, Chip, Stack } from '@mui/material';
+import { Box, Typography, Avatar, Chip } from '@mui/material';
 import { Element } from 'react-scroll';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
@@ -59,7 +59,9 @@ const AboutMe = () => {
           <Box sx={{ textAlign: 'center'}} borderRadius={2} bgcolor="background.paper" boxShadow={3} p={4}>
             <Typography variant="h4" gutterBottom>👨‍💻 About Me 👨‍💻</Typography>
             <Typography variant="body1" sx={{ maxWidth: 600, mx: 'auto', mb: 4 }}>
-              Hello, I'm Yeung Wing, currently work as an Electronic Technician Trainee at EMSD, a Higher Diploma student in Computer and Electronic Engineering from the Hong Kong Institute of Vocational Education. I'm passionate about technology, particularly in Internet of Things (IoT), with hands-on experience in microcontrollers, programming, networking and equipment maintenance such as medical devices, CCTV and PA system. I am eager to apply my skills in engineering projects.
+              {/* Start with introducing yourself, your background, and your interests */}
+              Hello, I'm Yeung Wing, currently work as an Electronic Technician Trainee at EMSD, a Higher Diploma student in Computer and Electronic Engineering from the Hong Kong Institute of Vocational Education. I'm passionate about technology, particularly in Internet of Things (IoT), with hands-on experience in microcontrollers, programming, networking and equipment maintenance such as medical devices, CCTV and PA system. I am eager to apply my skills in engineering projects. <br /><br />
+              In my free time, I enjoy photography and developing my skills. I love to tinker with hardware and software, creating innovative solutions to everyday problems. My goal is to become a senior electronic engineer.
             </Typography>
             <Typography variant="h6" gutterBottom>Key Competencies</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1, mb: 4 }}>
