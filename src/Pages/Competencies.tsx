@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Card, CardMedia, CardContent, Grid, Paper, Slide } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, Grid, Paper, Slide, Button } from '@mui/material';
 import { Element } from 'react-scroll';
 import { motion } from 'framer-motion';
 import TechStack from '../Components/TechStack';
@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import DownloadIcon from '@mui/icons-material/Download';
 
 import BenchFitting from '../assets/competencies/BenchFitting.jpg';
 import DataEngineerBootcamp from '../assets/competencies/DataEngineerBootcamp-YeungWing.jpg';
@@ -127,6 +129,10 @@ const Competencies = () => {
   const [slideDirection, setSlideDirection] = React.useState<'left' | 'right'>('right');
   const [imageKey, setImageKey] = React.useState(0);
 
+  // 拖拽狀態
+  const [isDragging, setIsDragging] = React.useState(false);
+  const [dragStart, setDragStart] = React.useState<{ x: number; y: number } | null>(null);
+
   const handleOpen = (cert: any) => {
     const index = certificates.findIndex(c => c.id === cert.id);
     setSelectedCertIndex(index);
@@ -158,6 +164,106 @@ const Competencies = () => {
       handleNext();
     } else if (e.key === 'Escape') {
       handleClose();
+    }
+  };
+
+  // 滑鼠拖拽控制
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX, y: e.clientY });
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !dragStart) return;
+    e.preventDefault();
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isDragging || !dragStart) return;
+    
+    const deltaX = e.clientX - dragStart.x;
+    const deltaY = e.clientY - dragStart.y;
+    const isHorizontalDrag = Math.abs(deltaX) > Math.abs(deltaY);
+    
+    if (isHorizontalDrag && Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        handlePrev(); // 向右拖拽 = 上一張
+      } else {
+        handleNext(); // 向左拖拽 = 下一張
+      }
+    }
+    
+    setIsDragging(false);
+    setDragStart(null);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setDragStart(null);
+  };
+
+  // 觸控拖拽控制
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setDragStart({
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY
+    });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !dragStart) return;
+    // 可選：阻止預設行為以防止頁面滾動
+    // e.preventDefault();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging || !dragStart) return;
+    
+    const deltaX = e.changedTouches[0].clientX - dragStart.x;
+    const deltaY = e.changedTouches[0].clientY - dragStart.y;
+    const isHorizontalDrag = Math.abs(deltaX) > Math.abs(deltaY);
+    
+    if (isHorizontalDrag && Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        handlePrev(); // 向右拖拽 = 上一張
+      } else {
+        handleNext(); // 向左拖拽 = 下一張
+      }
+    }
+    
+    setIsDragging(false);
+    setDragStart(null);
+  };
+
+  // 在新分頁開啟圖片
+  const handleOpenInNewTab = () => {
+    if (selectedCert) {
+      window.open(selectedCert.image, '_blank');
+    }
+  };
+
+  // 下載圖片
+  const handleDownloadImage = async () => {
+    if (!selectedCert) return;
+    
+    try {
+      const response = await fetch(selectedCert.image);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${selectedCert.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.jpg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+      // 備用方案：直接開啟圖片讓使用者右鍵儲存
+      handleOpenInNewTab();
     }
   };
 
@@ -233,21 +339,51 @@ const Competencies = () => {
               }
             }}
           >
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
+            {/* 頂部控制按鈕 */}
+            <Box
               sx={{
                 position: 'absolute',
-                right: 16,
                 top: 16,
-                color: '#fff',
+                right: 16,
                 zIndex: 3,
-                bgcolor: 'rgba(255,255,255,0.1)',
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' }
+                display: 'flex',
+                gap: 1
               }}
             >
-              <CloseIcon />
-            </IconButton>
+              <IconButton
+                aria-label="open in new tab"
+                onClick={handleOpenInNewTab}
+                sx={{
+                  color: '#fff',
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' }
+                }}
+              >
+                <OpenInNewIcon />
+              </IconButton>
+              <IconButton
+                aria-label="download"
+                onClick={handleDownloadImage}
+                sx={{
+                  color: '#fff',
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' }
+                }}
+              >
+                <DownloadIcon />
+              </IconButton>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  color: '#fff',
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' }
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
             
             {selectedCert && (
               <Box 
@@ -260,15 +396,25 @@ const Competencies = () => {
                 }}
               >
                 {/* 圖片容器 */}
-                <Box sx={{ 
-                  position: 'relative', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  width: '100%',
-                  minHeight: '60vh',
-                  overflow: 'hidden'
-                }}>
+                <Box 
+                  sx={{ 
+                    position: 'relative', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    maxwidth: '90%',
+                    minHeight: '60vh',
+                    overflow: 'hidden',
+                    cursor: isDragging ? 'grabbing' : 'grab'
+                  }}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  onMouseLeave={handleMouseLeave}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
                   {/* 左箭頭 */}
                   <IconButton
                     onClick={handlePrev}
@@ -301,8 +447,11 @@ const Competencies = () => {
                         maxHeight: '70vh',
                         objectFit: 'contain',
                         borderRadius: 8,
-                        boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
+                        boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                        userSelect: 'none',
+                        pointerEvents: isDragging ? 'none' : 'auto'
                       }}
+                      draggable={false}
                     />
                   </Slide>
                   
@@ -339,6 +488,36 @@ const Competencies = () => {
                 <Typography variant="caption" color="#90caf9" sx={{ mt: 1 }}>
                   {selectedCertIndex + 1} / {certificates.length}
                 </Typography>
+
+                {/* 底部操作按鈕 */}
+                <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+                  <Button
+                    variant="outlined"
+                    startIcon={<OpenInNewIcon />}
+                    onClick={handleOpenInNewTab}
+                    sx={{ 
+                      color: '#fff', 
+                      borderColor: '#fff',
+                      '&:hover': { 
+                        borderColor: '#90caf9',
+                        bgcolor: 'rgba(144, 202, 249, 0.1)'
+                      }
+                    }}
+                  >
+                    在新分頁開啟
+                  </Button>
+                  <Button
+                    variant="contained"
+                    startIcon={<DownloadIcon />}
+                    onClick={handleDownloadImage}
+                    sx={{ 
+                      bgcolor: '#1976d2',
+                      '&:hover': { bgcolor: '#1565c0' }
+                    }}
+                  >
+                    下載圖片
+                  </Button>
+                </Box>
               </Box>
             )}
           </Dialog>
