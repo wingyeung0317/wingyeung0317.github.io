@@ -21,8 +21,15 @@ const AboutMe = () => {
   const skillsData = [
     { subject: 'Programming (Python, React, C++)', A: 100, fullMark: 100 },
     { subject: 'Microcontrollers (Raspberry Pi, Arduino)', A: 87.5, fullMark: 100 },
-    { subject: 'Equipments Maintanece', A: 75, fullMark: 100 },
+    { subject: 'Equipment Maintenance', A: 75, fullMark: 100 }, // 修正拼字
     { subject: 'Networking & Cloud Services', A: 87.5, fullMark: 100 },
+  ];
+
+  const competencies = [
+    'Programming (Python, React, C++)', 
+    'Microcontrollers (Raspberry Pi, Arduino)', 
+    'Networking & Cloud Services', 
+    'Equipment Maintenance' // 修正拼字
   ];
 
   return (
@@ -56,7 +63,7 @@ const AboutMe = () => {
             </Typography>
             <Typography variant="h6" gutterBottom>Key Competencies</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1, mb: 4 }}>
-              {['Programming (Python, React, C++)', 'Microcontrollers (Raspberry Pi, Arduino)', 'Networking & Cloud Services', 'Equipments Maintanece'].map((comp) => (
+              {competencies.map((comp) => (
                 <Chip 
                   key={comp}
                   label={comp} 
