@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Card, CardMedia, CardContent, Grid, Paper } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, Grid, Paper, Tooltip } from '@mui/material';
 import { Element } from 'react-scroll';
 import { motion } from 'framer-motion';
 import TechStack from '../Components/TechStack';
@@ -151,31 +151,50 @@ const Competencies = () => {
 
   return (
     <Element name="competencies">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: false }}
-      >
-        <Box sx={{ py: 8 }}>
-          <Typography variant="h4" gutterBottom textAlign="center" sx={{ mb: 6 }}>
-            🏆 Competencies & Certifications 🏆
-          </Typography>
-          
-          {/* Certificates Section */}
-          <Box sx={{ mb: 8 }}>
-            <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-              Certifications
-            </Typography>
-            <Grid container spacing={4} justifyContent="center">
-              {certificates.map((cert) => (
-                <Grid key={cert.id} sx={{ xs: 12, sm: 6, md: 4}} width='45%'>
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
+      <Box sx={{ py: 8 }}>
+        <Typography variant="h4" component="h2" gutterBottom align="center">
+          🏆 My Competencies 🏆
+        </Typography>
+        
+        <Typography 
+          variant="body2" 
+          align="center" 
+          sx={{ 
+            mb: 3, 
+            color: 'text.secondary',
+            fontStyle: 'italic'
+          }}
+        >
+          🖱️ Click on certificates to view full details
+        </Typography>
+        
+        {/* Certificates Section */}
+        <Box sx={{ mb: 8 }}>
+          <Grid container spacing={4} justifyContent="center">
+            {certificates.map((cert) => (
+              <Grid key={cert.id} sx={{ xs: 12, sm: 6, md: 4}} width='45%'>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {/* 加入 Tooltip 提示 */}
+                  <Tooltip 
+                    title="🔍 Click to view certificate details" 
+                    arrow 
+                    placement="top"
+                    enterDelay={500}
+                    leaveDelay={200}
                   >
                     <Card 
-                      sx={{ height: '100%', boxShadow: 3, cursor: 'pointer' }}
+                      sx={{ 
+                        height: '100%', 
+                        boxShadow: 3, 
+                        cursor: 'pointer',
+                        transition: 'box-shadow 0.3s',
+                        '&:hover': {
+                          boxShadow: 6,
+                        }
+                      }}
                       onClick={() => handleOpen(cert)}
                     >
                       <CardMedia
@@ -197,34 +216,34 @@ const Competencies = () => {
                         </Typography>
                       </CardContent>
                     </Card>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-
-          {/* 使用 ImageDialog 元件 - 不啟用 slideshow */}
-          <ImageDialog
-            open={open}
-            onClose={handleClose}
-            images={dialogImages}
-            initialIndex={selectedCertIndex}
-            showControls={true}
-            showDownload={true}
-            enableSlideshow={false} // 證書不需要自動播放
-          />
-          
-          {/* Tech Stack Section */}
-          <Box>
-            <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-              Technical Skills
-            </Typography>
-            <Paper elevation={2} sx={{ p: 4, borderRadius: 2 }}>
-              <TechStack />
-            </Paper>
-          </Box>
+                  </Tooltip>
+                </motion.div>
+              </Grid>
+            ))}
+          </Grid>
         </Box>
-      </motion.div>
+
+        {/* 使用 ImageDialog 元件 - 不啟用 slideshow */}
+        <ImageDialog
+          open={open}
+          onClose={handleClose}
+          images={dialogImages}
+          initialIndex={selectedCertIndex}
+          showControls={true}
+          showDownload={true}
+          enableSlideshow={false} // 證書不需要自動播放
+        />
+        
+        {/* Tech Stack Section */}
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
+            Technical Skills
+          </Typography>
+          <Paper elevation={2} sx={{ p: 4, borderRadius: 2 }}>
+            <TechStack />
+          </Paper>
+        </Box>
+      </Box>
     </Element>
   );
 };

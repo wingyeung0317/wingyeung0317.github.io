@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography, Button, Box } from '@mui/material';
+import { keyframes } from '@mui/system';
 import ImageDialog from './ImageDialog';
 
 type ProjectButton = {
@@ -15,6 +16,18 @@ type ProjectCardProps = {
   images?: string[];
   buttons?: ProjectButton[];
 };
+
+const pulseAnimation = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, images, buttons }) => {
   const [index, setIndex] = React.useState(0);
@@ -53,76 +66,131 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, ima
 
   return (
     <>
-      <Card
-        sx={{
-          maxWidth: 345,
-          minHeight: 250,
-          transition: 'transform 0.3s',
-          '&:hover': { transform: 'scale(1.05)' },
-          backgroundImage: bgImage ? `url(${bgImage})` : undefined,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          color: bgImage ? '#fff' : 'inherit',
-          position: 'relative',
-          overflow: 'hidden',
-          cursor: images && images.length > 0 ? 'pointer' : 'default',
-        }}
-        onClick={handleCardClick}
-      >
-        {bgImage && (
-          <Box
-            sx={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              bgcolor: 'rgba(0, 0, 0, 0.8)',
-              zIndex: 1,
-            }}
-          />
-        )}
-        <CardContent
+        <Card
           sx={{
-            borderRadius: 2,
+            maxWidth: 345,
+            minHeight: 250,
+            transition: 'transform 0.3s, box-shadow 0.3s',
+            '&:hover': { 
+              transform: 'scale(1.05)',
+              boxShadow: 6,
+              '& .click-hint': { // 懸停時顯示提示
+                opacity: 1
+              }
+            },
+            backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            color: bgImage ? '#fff' : 'inherit',
             position: 'relative',
-            zIndex: 2,
+            overflow: 'hidden',
+            cursor: images && images.length > 0 ? 'pointer' : 'default',
           }}
+          onClick={handleCardClick}
         >
-          <Typography variant="h6">{title}</Typography>
-          <Typography variant="body2" color={bgImage ? "#fff" : "text.secondary"}>{description}</Typography>
+          {bgImage && (
+            <Box
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                bgcolor: 'rgba(0, 0, 0, 0.8)',
+                zIndex: 1,
+              }}
+            />
+          )}
+          {images && images.length > 0 && (
+            <Box
+              className="click-hint"
+              sx={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                bgcolor: 'rgba(255, 255, 255, 0.65)',
+                color: 'black',
+                px: 1,
+                py: 0.5,
+                borderRadius: 1,
+                fontSize: '0.75rem',
+                opacity: 0,
+                transition: 'opacity 0.3s',
+                zIndex: 3,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5
+              }}
+            >
+              🖱️ Click to view
+            </Box>
+          )}
           
-          {buttons ? (
-            <Box sx={{ mt: 2 }}>
-              {buttons.map((btn, idx) => (
-                <Button
-                  key={idx}
-                  variant={btn.variant || (idx === 0 ? 'contained' : 'outlined')}
+          <CardContent
+            sx={{
+              borderRadius: 2,
+              position: 'relative',
+              zIndex: 2,
+              p: 3.5
+            }}
+          >
+            <Typography variant="h6">{title}</Typography>
+            <Typography variant="body2" color={bgImage ? "#fff" : "text.secondary"}>{description}</Typography>
+            
+            {buttons ? (
+              <Box sx={{ mt: 2 }}>
+                {buttons.map((btn, idx) => (
+                  <Button
+                    key={idx}
+                    variant={btn.variant || (idx === 0 ? 'contained' : 'outlined')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(btn.url, '_blank');
+                    }}
+                    sx={{ mt: 1, mr: 1 }}
+                  >
+                    {btn.label}
+                  </Button>
+                ))}
+              </Box>
+            ) : (
+              link && (
+                <Button 
+                  variant="contained" 
                   onClick={(e) => {
                     e.stopPropagation();
-                    window.open(btn.url, '_blank');
-                  }}
-                  sx={{ mt: 1, mr: 1 }}
+                    window.open(link, '_blank');
+                  }} 
+                  sx={{ mt: 2 }}
                 >
-                  {btn.label}
+                  View on GitHub
                 </Button>
-              ))}
+              )
+            )}
+          </CardContent>
+
+          {/* 在卡片中添加動畫圖標 */}
+          {images && images.length > 0 && (
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 16,
+                right: 16,
+                bgcolor: 'primary.main',
+                color: 'white',
+                borderRadius: '50%',
+                width: 32,
+                height: 32,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                animation: `${pulseAnimation} 2s infinite`,
+                zIndex: 3
+              }}
+            >
+              🔍
             </Box>
-          ) : (
-            link && (
-              <Button 
-                variant="contained" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.open(link, '_blank');
-                }} 
-                sx={{ mt: 2 }}
-              >
-                View on GitHub
-              </Button>
-            )
           )}
-        </CardContent>
-      </Card>
+        </Card>
 
       {/* 簡化的 ImageDialog 使用 */}
       <ImageDialog

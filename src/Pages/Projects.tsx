@@ -34,6 +34,19 @@ const Projects = () => (
     >
       <Box sx={{ py: 8, bgcolor: 'background.default' }}>
         <Typography variant="h4" align="center" gutterBottom>🚀 Projects 🚀</Typography>
+        
+        <Typography 
+          variant="body2" 
+          align="center" 
+          sx={{ 
+            mb: 4, 
+            color: 'text.secondary',
+            fontStyle: 'italic'
+          }}
+        >
+          💡 Click on project cards to view detailed images and demos
+        </Typography>
+        
         <Grid container spacing={4} justifyContent="center">
           <Grid>
             <ProjectCard
