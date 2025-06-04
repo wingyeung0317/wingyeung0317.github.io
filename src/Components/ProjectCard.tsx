@@ -100,25 +100,29 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, ima
               }}
             />
           )}
+          
+          {/* 將 click hint 移到左上角，避免與內容重疊 */}
           {images && images.length > 0 && (
             <Box
               className="click-hint"
               sx={{
                 position: 'absolute',
-                top: 8,
-                right: 8,
-                bgcolor: 'rgba(255, 255, 255, 0.65)',
+                top: 12,
+                left: 12,
+                bgcolor: 'rgba(255, 255, 255, 0.9)',
                 color: 'black',
-                px: 1,
+                px: 1.5,
                 py: 0.5,
-                borderRadius: 1,
+                borderRadius: 2,
                 fontSize: '0.75rem',
+                fontWeight: 500,
                 opacity: 0,
                 transition: 'opacity 0.3s',
                 zIndex: 3,
                 display: 'flex',
                 alignItems: 'center',
-                gap: 0.5
+                gap: 0.5,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
               }}
             >
               🖱️ Click to view
@@ -130,7 +134,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, ima
               borderRadius: 2,
               position: 'relative',
               zIndex: 2,
-              p: 3.5
             }}
           >
             <Typography variant="h6">{title}</Typography>
@@ -168,28 +171,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, ima
             )}
           </CardContent>
 
-          {/* 在卡片中添加動畫圖標 */}
-          {images && images.length > 0 && (
-            <Box
-              sx={{
-                position: 'absolute',
-                bottom: 16,
-                right: 16,
-                bgcolor: 'primary.main',
-                color: 'white',
-                borderRadius: '50%',
-                width: 32,
-                height: 32,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                animation: `${pulseAnimation} 2s infinite`,
-                zIndex: 3
-              }}
-            >
-              🔍
-            </Box>
-          )}
+          {/* 移除動畫圖標，避免與 click hint 重複 */}
         </Card>
 
       {/* 簡化的 ImageDialog 使用 */}
