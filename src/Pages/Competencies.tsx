@@ -194,7 +194,7 @@ const Competencies = () => {
             </Grid>
           </Box>
 
-          {/* 使用 ImageDialog 元件 */}
+          {/* 使用 ImageDialog 元件 - 不啟用 slideshow */}
           <ImageDialog
             open={open}
             onClose={handleClose}
@@ -202,6 +202,7 @@ const Competencies = () => {
             initialIndex={selectedCertIndex}
             showControls={true}
             showDownload={true}
+            enableSlideshow={false} // 證書不需要自動播放
           />
           
           {/* Tech Stack Section */}

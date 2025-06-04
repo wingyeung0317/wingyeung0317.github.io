@@ -5,6 +5,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DownloadIcon from '@mui/icons-material/Download';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 
 type ImageItem = {
   src: string;
@@ -21,7 +23,8 @@ type ImageDialogProps = {
   initialIndex?: number;
   showControls?: boolean;
   showDownload?: boolean;
-  onIndexChange?: (index: number) => void; // 新增：索引變更回調
+  enableSlideshow?: boolean;
+  slideshowInterval?: number;
 };
 
 const ImageDialog: React.FC<ImageDialogProps> = ({ 
@@ -31,34 +34,102 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
   initialIndex = 0,
   showControls = true,
   showDownload = false,
-  onIndexChange // 新增
+  enableSlideshow = false,
+  slideshowInterval = 2700
 }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(initialIndex);
   const [slideDirection, setSlideDirection] = React.useState<'left' | 'right'>('right');
   const [imageKey, setImageKey] = React.useState(0);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const slideshowRef = React.useRef<NodeJS.Timeout | null>(null);
+  const pauseTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // 更新選中索引
   React.useEffect(() => {
     if (open) {
       setSelectedIndex(initialIndex);
       setImageKey(prev => prev + 1);
+      if (enableSlideshow) {
+        setIsPlaying(true); // 開啟 dialog 時自動開始播放
+      }
+    } else {
+      setIsPlaying(false);
+      // 清理計時器
+      if (slideshowRef.current) {
+        clearInterval(slideshowRef.current);
+        slideshowRef.current = null;
+      }
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+        pauseTimeoutRef.current = null;
+      }
     }
-  }, [open, initialIndex]);
+  }, [open, initialIndex, enableSlideshow]);
+
+  // Slideshow 自動播放
+  React.useEffect(() => {
+    if (!enableSlideshow || !isPlaying || !open || images.length <= 1) {
+      if (slideshowRef.current) {
+        clearInterval(slideshowRef.current);
+        slideshowRef.current = null;
+      }
+      return;
+    }
+    
+    slideshowRef.current = setInterval(() => {
+      setSlideDirection('right');
+      setSelectedIndex(prev => (prev + 1) % images.length);
+      setImageKey(prev => prev + 1);
+    }, slideshowInterval);
+    
+    return () => {
+      if (slideshowRef.current) {
+        clearInterval(slideshowRef.current);
+        slideshowRef.current = null;
+      }
+    };
+  }, [enableSlideshow, isPlaying, open, selectedIndex, images.length, slideshowInterval]);
+
+  // 手動切換時暫停播放的邏輯
+  const pauseAndResume = () => {
+    if (!enableSlideshow || !isPlaying) return;
+    
+    setIsPlaying(false);
+    
+    // 清除現有的恢復計時器
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+    
+    // 3秒後恢復播放
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPlaying(true);
+    }, 3000);
+  };
 
   const handlePrev = () => {
     setSlideDirection('left');
-    const newIndex = (selectedIndex - 1 + images.length) % images.length;
-    setSelectedIndex(newIndex);
+    setSelectedIndex(prev => (prev - 1 + images.length) % images.length);
     setImageKey(prev => prev + 1);
-    onIndexChange?.(newIndex); // 通知父元件索引變更
+    pauseAndResume(); // 暫停並稍後恢復播放
   };
 
   const handleNext = () => {
     setSlideDirection('right');
-    const newIndex = (selectedIndex + 1) % images.length;
-    setSelectedIndex(newIndex);
+    setSelectedIndex(prev => (prev + 1) % images.length);
     setImageKey(prev => prev + 1);
-    onIndexChange?.(newIndex); // 通知父元件索引變更
+    pauseAndResume(); // 暫停並稍後恢復播放
+  };
+
+  // 切換播放/暫停
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+    
+    // 如果是手動暫停，清除自動恢復計時器
+    if (isPlaying && pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+      pauseTimeoutRef.current = null;
+    }
   };
 
   // 鍵盤控制
@@ -69,6 +140,9 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
       handleNext();
     } else if (e.key === 'Escape') {
       onClose();
+    } else if (e.key === ' ' && enableSlideshow) {
+      e.preventDefault();
+      togglePlayPause();
     }
   };
 
@@ -132,6 +206,19 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
           gap: 1
         }}
       >
+        {enableSlideshow && images.length > 1 && (
+          <IconButton
+            aria-label={isPlaying ? "pause slideshow" : "play slideshow"}
+            onClick={togglePlayPause}
+            sx={{
+              color: '#fff',
+              bgcolor: 'rgba(255,255,255,0.1)',
+              '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' }
+            }}
+          >
+            {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+          </IconButton>
+        )}
         {showControls && (
           <>
             <IconButton
@@ -189,7 +276,7 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
-            width: '100%',
+            maxWidth: '95%',
             minHeight: '60vh',
             overflow: 'hidden'
           }}
@@ -274,14 +361,38 @@ const ImageDialog: React.FC<ImageDialogProps> = ({
         
         {/* 圖片計數器 */}
         {images.length > 1 && (
-          <Typography variant="caption" color="#90caf9" sx={{ mt: 1 }}>
-            {selectedIndex + 1} / {images.length}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+            <Typography variant="caption" color="#90caf9">
+              {selectedIndex + 1} / {images.length}
+            </Typography>
+            {enableSlideshow && (
+              <Typography variant="caption" color={isPlaying ? "#4caf50" : "#ff9800"}>
+                • {isPlaying ? "播放中" : "已暫停"}
+              </Typography>
+            )}
+          </Box>
         )}
 
         {/* 底部操作按鈕 */}
         {showControls && (
-          <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+          <Box sx={{ display: 'flex', gap: 2, mt: 3, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {enableSlideshow && images.length > 1 && (
+              <Button
+                variant="outlined"
+                startIcon={isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+                onClick={togglePlayPause}
+                sx={{ 
+                  color: isPlaying ? '#4caf50' : '#ff9800', 
+                  borderColor: isPlaying ? '#4caf50' : '#ff9800',
+                  '&:hover': { 
+                    borderColor: isPlaying ? '#66bb6a' : '#ffb74d',
+                    bgcolor: isPlaying ? 'rgba(76, 175, 80, 0.1)' : 'rgba(255, 152, 0, 0.1)'
+                  }
+                }}
+              >
+                {isPlaying ? '暫停播放' : '開始播放'}
+              </Button>
+            )}
             <Button
               variant="outlined"
               startIcon={<OpenInNewIcon />}

@@ -19,10 +19,8 @@ type ProjectCardProps = {
 const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, images, buttons }) => {
   const [index, setIndex] = React.useState(0);
   const [open, setOpen] = React.useState(false);
-  const [autoPlay, setAutoPlay] = React.useState(true); // 新增：控制自動播放
-  const timerRef = React.useRef<NodeJS.Timeout | null>(null); // 新增：計時器引用
 
-  // 卡片自動輪播
+  // 只保留卡片自動輪播
   React.useEffect(() => {
     if (open || !images || images.length <= 1) return;
     const timer = setInterval(() => {
@@ -31,22 +29,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, ima
     return () => clearInterval(timer);
   }, [open, images]);
 
-  // Dialog 自動輪播
-  React.useEffect(() => {
-    if (!open || !images || images.length <= 1 || !autoPlay) return;
-    
-    timerRef.current = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 2700);
-    
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [open, images, autoPlay]);
-
   const bgImage = images && images.length > 0 ? images[index] : undefined;
 
   const handleCardClick = (e: React.MouseEvent) => {
@@ -54,30 +36,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, ima
     
     if (images && images.length > 0) {
       setOpen(true);
-      setAutoPlay(true); // 開啟 Dialog 時恢復自動播放
     }
   };
 
   const handleClose = () => {
     setOpen(false);
-    setAutoPlay(true); // 關閉 Dialog 時恢復自動播放
-  };
-
-  // 手動切換圖片時暫停自動播放
-  const handleManualChange = (newIndex: number) => {
-    setIndex(newIndex);
-    setAutoPlay(false); // 暫停自動播放
-    
-    // 清除現有計時器
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    
-    // 5秒後恢復自動播放
-    setTimeout(() => {
-      setAutoPlay(true);
-    }, 3000);
   };
 
   // 轉換圖片格式供 ImageDialog 使用
@@ -161,15 +124,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, link, ima
         </CardContent>
       </Card>
 
-      {/* 使用 ImageDialog 元件 */}
+      {/* 簡化的 ImageDialog 使用 */}
       <ImageDialog
         open={open}
         onClose={handleClose}
         images={dialogImages}
         initialIndex={index}
-        showControls={false}
-        showDownload={false}
-        onIndexChange={handleManualChange} // 新增：手動切換回調
+        showControls={true}
+        showDownload={true}
+        enableSlideshow={true}
+        slideshowInterval={2700}
       />
     </>
   );
