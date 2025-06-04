@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/static/css/main.aa276f67.css",
-    "main.js": "/static/js/main.cf82a193.js",
+    "main.js": "/static/js/main.cc08cc65.js",
     "static/js/453.5af2c5fc.chunk.js": "/static/js/453.5af2c5fc.chunk.js",
     "static/media/F3-YeungWing2.jpg": "/static/media/F3-YeungWing2.b613c24f26ca6603be7a.jpg",
-    "static/media/image1.png": "/static/media/image1.b86f2f8244381bd21118.png",
+    "static/media/image1.png": "/static/media/image1.a9d8e4325d9c41a3970e.png",
     "static/media/DataEngineerBootcamp-YeungWing.jpg": "/static/media/DataEngineerBootcamp-YeungWing.7c6bff360e2ea508bd9a.jpg",
     "static/media/image02.png": "/static/media/image02.5d1facee533a31309123.png",
     "static/media/VTC_DVE_Cert-YeungWing.jpg": "/static/media/VTC_DVE_Cert-YeungWing.826f8757589c1a77d918.jpg",
@@ -12,18 +12,24 @@
     "static/media/IVE_Competition-YeungWing.jpg": "/static/media/IVE_Competition-YeungWing.aa7553f448eb01df715d.jpg",
     "static/media/image01.png": "/static/media/image01.d5ea381719ff491025cb.png",
     "static/media/BenchFitting.jpg": "/static/media/BenchFitting.97119ac5bbf294f55b77.jpg",
+    "static/media/image3.png": "/static/media/image3.bb48ea3cc8a0452975c8.png",
     "static/media/image0.png": "/static/media/image0.262d3d911cf548dab1b6.png",
     "static/media/404.gif": "/static/media/404.377d6170ee13aa104b5d.gif",
     "static/media/avatar.png": "/static/media/avatar.2684ca2e741696cd6024.png",
+    "static/media/image4.png": "/static/media/image4.2992472f3a392dce02f0.png",
     "static/media/ElectronicsAndInformationTechnology.jpg": "/static/media/ElectronicsAndInformationTechnology.fc167c3d002084466d91.jpg",
     "static/media/Welding.jpg": "/static/media/Welding.ed02c11792bec8ea3c44.jpg",
     "static/media/HkieContribution-YeungWing.jpg": "/static/media/HkieContribution-YeungWing.c7e9c132cd3e506c09de.jpg",
+    "static/media/GoldenBauhinaAward.jpg": "/static/media/GoldenBauhinaAward.6930f49a791d676bbf70.jpg",
     "static/media/Refrigeration.jpg": "/static/media/Refrigeration.298f4e7539d747c745ea.jpg",
-    "static/media/image2.png": "/static/media/image2.7135e2bc36d25629810b.png",
-    "static/media/ConstructionIndustrySafety.jpg": "/static/media/ConstructionIndustrySafety.6e4a812bf1191bf3bfad.jpg",
+    "static/media/image2.png": "/static/media/image2.6199d08c520b93e7f7ba.png",
+    "static/media/image5.png": "/static/media/image5.f3bf4c1df43e4f7beca5.png",
     "static/media/DrivingLicense_block.jpg": "/static/media/DrivingLicense_block.6e4a812bf1191bf3bfad.jpg",
+    "static/media/image6.png": "/static/media/image6.b2d300e2735289577048.png",
+    "static/media/ConstructionIndustrySafety.jpg": "/static/media/ConstructionIndustrySafety.fca6a95750a70abf4817.jpg",
     "static/media/image03.png": "/static/media/image03.52245287e2ffeb5c163e.png",
     "static/media/image029.png": "/static/media/image029.2a1c037e5504c1dbf42d.png",
+    "static/media/image7.png": "/static/media/image7.258a5954657fef5908bd.png",
     "static/media/image016.jpg": "/static/media/image016.fbf561c187bc69b5c1b4.jpg",
     "static/media/image017.jpg": "/static/media/image017.8ddd5d3ac45d719891a0.jpg",
     "static/media/image018.jpg": "/static/media/image018.8370d4773636fab8ff77.jpg",
@@ -31,11 +37,11 @@
     "static/media/image015.jpg": "/static/media/image015.54251e70218394bbe301.jpg",
     "index.html": "/index.html",
     "main.aa276f67.css.map": "/static/css/main.aa276f67.css.map",
-    "main.cf82a193.js.map": "/static/js/main.cf82a193.js.map",
+    "main.cc08cc65.js.map": "/static/js/main.cc08cc65.js.map",
     "453.5af2c5fc.chunk.js.map": "/static/js/453.5af2c5fc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.aa276f67.css",
-    "static/js/main.cf82a193.js"
+    "static/js/main.cc08cc65.js"
   ]
 }
