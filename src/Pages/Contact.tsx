@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box, Typography, Card, CardContent, Grid, Chip, Divider } from '@mui/material';
+import { Box, Typography, Card, CardContent, Grid, Divider } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import PhoneIcon from '@mui/icons-material/Phone';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Element } from 'react-scroll';
 import { motion } from 'framer-motion';
 
